@@ -90,16 +90,16 @@ for item in range(1,100,1):
 	payload['z_axis'] = item
 
 	#print (payload)
-	ts = time.time()
+	#ts = time.time()
 	try:
 	
 		r = s.patch(URL, data=json.dumps(payload), timeout=0.2)
 	except Exception as e:
-		print ('request has timed out: '+ str(e) +'\n')
+		#print ('request has timed out: '+ str(e) +'\n')
 		pass
-	ta = time.time()
-	dt = ta - ts
-	print ('Time before timeout' + str(0.2-dt)+'\n')
-	print ('Time difference:' + str(dt) + '\n')
+	#ta = time.time()
+	#dt = ta - ts
+	#print ('Time before timeout' + str(0.2-dt)+'\n')
+	#print ('Time difference:' + str(dt) + '\n')
 
 print ('TIME2 '+ str(time.time() - t2))

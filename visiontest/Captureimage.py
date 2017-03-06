@@ -2,11 +2,20 @@ import requests
 import json
 import time
 
+from json_tricks import dump, dumps
+
 import sys
 
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 # client = requests.session()
+
+import numpy as np
+import cv2
+
+import zlib
+
+cap = cv2.VideoCapture(0)
 
 
 #for reading from bus, talk to jay, will he store values
@@ -54,20 +63,19 @@ class I2Cinput(object):
 # 	print (number_recived)
 
 
-user_inputs = sys.argv
+# user_inputs = sys.argv
 
-quadname = user_inputs[1]
-password = user_inputs[2]
-time_delay = float(user_inputs[3])
+# quadname = user_inputs[1]
+# password = user_inputs[2]
+# time_delay = float(user_inputs[3])
 
 
-print (quadname + password + str(time_delay))
+# print (quadname + password + str(time_delay))
 
-time.sleep(time_delay)
 
 #for testing 
 
-# quadname = 'greg7'
+quadname = 'ferrari'
 
 
 URL = 'https://quadlink-c80dc.firebaseio.com/'+ quadname +'.json'
@@ -76,6 +84,7 @@ s = requests.Session()
 print (URL)
 
 payload = {
+	'image':0,
 	'x_axis': 0,
 	'y_axis': 0,
 	'z_axis': 0,
@@ -83,23 +92,49 @@ payload = {
 
 
 t2 = time.time()
-for item in range(1,100,1):
-	
-	payload['x_axis'] = item
-	payload['y_axis'] = item
-	payload['z_axis'] = item
 
-	#print (payload)
-	ts = time.time()
-	try:
-	
-		r = s.patch(URL, data=json.dumps(payload), timeout=0.2)
-	except Exception as e:
-		print ('request has timed out: '+ str(e) +'\n')
-		pass
-	ta = time.time()
-	dt = ta - ts
-	print ('Time before timeout' + str(0.2-dt)+'\n')
-	print ('Time difference:' + str(dt) + '\n')
+while True:
+	for item in range(1,2,1):
+		
+		payload['x_axis'] = item
+		payload['y_axis'] = item
+		payload['z_axis'] = item
+
+		tIg = time.time()
+
+		ret, frame = cap.read()
+		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+		cv2.imshow('frame',gray)
+
+		C = time.time()
+		frame_bits = np.unpackbits(frame)
+		print (frame_bits)
+		frame_compressed = zlib.compress(frame_bits,1)
+		print (len(frame_compressed))
+		print ('Timecompression' + str((time.time()-C)))
+
+		payload['image'] = encoded_frame
+		print ('Timeimage' + str((time.time()-tIg)))
+		#print (payload)
+		ts = time.time()
+		try:
+
+			r = s.patch(URL, data=json.dumps(payload))
+		
+		except Exception as e:
+			print ('request has timed out: '+ str(e) +'\n')
+			pass
+		ta = time.time()
+		dt = ta - ts
+		print ('Time difference:' + str(dt) + '\n')
+
+	if cv2.waitKey(1) & 0xFF == ord('q'):
+		break
+
+
 
 print ('TIME2 '+ str(time.time() - t2))
+
+cap.release()
+cv2.destroyAllWindows()
+
