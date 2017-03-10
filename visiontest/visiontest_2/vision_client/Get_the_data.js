@@ -50,27 +50,22 @@ function get_the_data() {
 		up(po,snapshot.val());
 	});
 
-	const pitch = firebase.database().ref().child(quad).child("pitch")
+	const x_value = firebase.database().ref().child(quad).child("x_axis")
 
-	// pitch.on('value', function(snapshot) {
-	// 	console.log(snapshot.val())
-	// 	insidefun(inside, snapshot.val())
-	// });
+	x_value.on('value', function(snapshot) {
+		console.log(snapshot.val())
+		insidefun(inside, snapshot.val())
+	});
 
-	const roll = firebase.database().ref().child(quad).child("roll")
 
-	const yaw = firebase.database().ref().child(quad).child("yaw")
+	const y_value = firebase.database().ref().child(quad).child("y_axis")
 
-	const temp = firebase.database().ref().child(quad).child('temp')
+	const z_value = firebase.database().ref().child(quad).child("y_axis")
 
-	const x_acc = firebase.database().ref().child(quad).child('x_acc')
+	const image = firebase.database().ref().child(quad).child('image')
 
-	const y_acc = firebase.database().ref().child(quad).child('y_acc')
-
-	const z_acc = firebase.database().ref().child(quad).child('z_acc')
-
-	var LinkedObj = new links(pitch, roll, yaw, temp, x_acc,y_acc,z_acc)
-	console.log(LinkedObj.pitch,LinkedObj.roll,LinkedObj.yaw )
+	var LinkedObj = new links(x_value, y_value, z_value, image)
+	console.log('the image array',LinkedObj.imageU)
 
 	return LinkedObj;
 

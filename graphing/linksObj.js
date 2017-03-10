@@ -1,5 +1,9 @@
-function links(x_value,y_value,z_value) {
-	this.x_valuex = x_value;
-	this.y_valuey = y_value;
-	this.z_valuez = z_value;
+function links(pitch,roll,yaw,temp,x_acc,y_acc,z_acc) {
+	this.pitch = pitch;
+	this.roll = roll;
+	this.yaw = yaw;
+	this.temp = temp;
+	this.x_acc = x_acc;
+	this.y_acc = y_acc;
+	this.z_acc = z_acc;
 }

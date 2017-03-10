@@ -1,22 +1,17 @@
 import serial
-import requests 
-import json
 import time
 import re
 
 import sys
 
-import requests.packages.urllib3
-requests.packages.urllib3.disable_warnings()
 
-
-
+#initialise serial port 
 serialport = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
 
 
 
 
-
+#logic control
 coms = []
 begining = False
 end = False
@@ -24,9 +19,12 @@ ignore = True
 count = 0
 while True:
 
+	#one character per while loop
 	command = str(serialport.read(1))
 
-	#logic bomb
+	#print command
+
+	#Logic bomb
 	if command == "-":
 		ignore = True
 	else:
@@ -45,13 +43,21 @@ while True:
 				coms.append(command)
 
 
-		#its entering every time a new array is created,
+		#Its entering every time a new array is created,
 		if end == True:
 
 			count += 1
 			if command == ")":
-				
-				#print ('use this')
+
 				coms_tog = "".join(coms)
-				coms_spit = coms_tog.split(",")
-				print coms_spit
+				#print 'adding'
+
+				#Do stuff here
+				#print coms_tog
+				multiplex = open('multiplex.txt', 'w')
+				multiplex.write(coms_tog)
+				multiplex.close()
+
+
+			while (len(coms)>0):
+					coms.pop()

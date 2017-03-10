@@ -60,7 +60,7 @@ function callable(LinkObj) {
 		// update chart after specified time. 
 		//setInterval(function(){updateChart()}, updateInterval); 
 
-		LinkObj.y_valuey.on('value', function(snapshot) {
+		LinkObj.x_acc.on('value', function(snapshot) {
 		console.log(snapshot.val())
 		updateChart( undefined , snapshot.val())
 		});
