@@ -36,13 +36,19 @@ time.sleep(time_delay)
 
 
 payload = {
+	'axis': {
 	'pitch': 0,
 	'roll': 0,
 	'yaw': 0,
+	},
+	
+	'acceleration': {
+		'x_acc': 0,
+		'x_acc': 0,
+		'z_acc': 0,
+		},
+
 	'temp':0,
-	'x_acc':0,
-	'x_acc':0,
-	'z_acc':0,
 }
 
 
@@ -68,15 +74,15 @@ for item in range(100):
 		
 		try:
 			# try:
-			payload['pitch'] = coms_spit[0]
+			payload['axis']['pitch'] = coms_spit[0]
 			# except Exception as P:
 			# 	print (P)
 			# try:
-			payload['roll'] = coms_spit[1]
+			payload['axis']['roll'] = coms_spit[1]
 			# except Exception as R:
 			# 	print (R)
 			# try:
-			payload['yaw'] = coms_spit[2]
+			payload['axis']['yaw'] = coms_spit[2]
 			# except Exception as Y:
 			# 	print (Y)
 			# try:
@@ -85,17 +91,17 @@ for item in range(100):
 			# 	print (T)
 
 			# try:
-			payload['x_acc'] = coms_spit[4]
+			payload['acceleration']['x_acc'] = coms_spit[4]
 			# except Exception as AX:
 			# 	print (AX)
 
 			# try:
-			payload['y_acc'] = coms_spit[5]
+			payload['acceleration']['y_acc'] = coms_spit[5]
 			# except Exception as AY:
 			# 	print (AY)
 
 			# try:
-			payload['z_acc'] = coms_spit[6]
+			payload['acceleration']['z_acc'] = coms_spit[6]
 			# except Exception as AZ:
 			# 	print (AZ
 			send = True
