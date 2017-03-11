@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>My first Three.js app</title>
+<style>canvas { width: 100%; height: 100% }</style>
+</head>
+<body>
+<script src="js/three.min.js"></script>
+<script>
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 10000);
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+var triangleGeometry = new THREE.Geometry(); 
+triangleGeometry.vertices.push(new THREE.Vector3( 0.0,  400, 0.0)); 
+triangleGeometry.vertices.push(new THREE.Vector3(-400, -400, 0.0)); 
+triangleGeometry.vertices.push(new THREE.Vector3( 400, -400, 0.0)); 
+triangleGeometry.faces.push(new THREE.Face3(0, 1, 2)); 
+
+var triangleMaterial = new THREE.MeshBasicMaterial({ 
+color:0xFFFFFF, 
+side:THREE.DoubleSide 
+});  
+
+
+var triangleMesh = new THREE.Mesh(triangleGeometry, triangleMaterial); 
+triangleMesh.position.set(-1.5, 0.0, 4.0); 
+scene.add(triangleMesh); 
+
+
+
+camera.position.z = 1000;        
+function render() {
+requestAnimationFrame(render);
+triangleMesh.rotation.x += 0.01; //roll
+// // cube.rotation.y += 0.01; //yaw
+triangleMesh.rotation.z += 0.02; //pitch
+renderer.render(scene, camera);
+};
+render();
+</script>
+</body>
+</html>

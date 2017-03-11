@@ -1,6 +1,6 @@
 // window.onload = initAll;
-
-
+//https://www.awwwards.com/creating-3d-cube-a-practical-guide-to-three-js-with-live-demo.html
+//https://wowmoron.wordpress.com/2013/10/21/webgl-and-javascript-drawing-simple-3d-shapes-using-three-js/
 function get_the_data() {
 	var po = document.getElementById('po');
 	console.log(po)
@@ -9,14 +9,14 @@ function get_the_data() {
 	console.log(inside)
 
 	var up = function(element, val) {
-		console.log(val)
+		console.log('Whole object',val)
 		element.textContent = val;
 	}
 
-	var insidefun = function(element, val) {
-		console.log(val)
-		element.textContent = val;
-	}
+	// var insidefun = function(element, val) {
+	// 	console.log(val)
+	// 	element.textContent = val;
+	// }
 
 
 	console.log('hi');
@@ -50,27 +50,32 @@ function get_the_data() {
 		up(po,snapshot.val());
 	});
 
-	const pitch = firebase.database().ref().child(quad).child("pitch")
+
+	const axis = firebase.database().ref().child(quad).child("axis")
+
+	const pitch = firebase.database().ref().child(quad).child("axis").child("pitch")
 
 	// pitch.on('value', function(snapshot) {
 	// 	console.log(snapshot.val())
 	// 	insidefun(inside, snapshot.val())
 	// });
 
-	const roll = firebase.database().ref().child(quad).child("roll")
+	const roll = firebase.database().ref().child(quad).child("axis").child("roll")
 
-	const yaw = firebase.database().ref().child(quad).child("yaw")
+	const yaw = firebase.database().ref().child(quad).child("axis").child("yaw")
 
 	const temp = firebase.database().ref().child(quad).child('temp')
 
-	const x_acc = firebase.database().ref().child(quad).child('x_acc')
+	const acceleration = firebase.database().ref().child(quad).child('acceleration')
 
-	const y_acc = firebase.database().ref().child(quad).child('y_acc')
+	const x_acc = firebase.database().ref().child(quad).child('acceleration').child('x_acc')
 
-	const z_acc = firebase.database().ref().child(quad).child('z_acc')
+	const y_acc = firebase.database().ref().child(quad).child('acceleration').child('y_acc')
 
-	var LinkedObj = new links(pitch, roll, yaw, temp, x_acc,y_acc,z_acc)
-	console.log(LinkedObj.pitch,LinkedObj.roll,LinkedObj.yaw )
+	const z_acc = firebase.database().ref().child(quad).child('acceleration').child('z_acc')
+
+	var LinkedObj = new links(axis,pitch, roll, yaw, temp,acceleration, x_acc,y_acc,z_acc)
+	console.log('Parts of lissener object',LinkedObj.pitch,LinkedObj.roll,LinkedObj.yaw )
 
 	return LinkedObj;
 

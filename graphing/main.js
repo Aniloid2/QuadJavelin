@@ -1,5 +1,6 @@
 function main() {
 	Link_obj = get_the_data()
-	console.log(Link_obj.x_valuex)
+	console.log('main object', Link_obj)
 	callable(Link_obj)
+
 }

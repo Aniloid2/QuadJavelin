@@ -8,22 +8,17 @@ import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
 
-def calculate_gx(ax):
-	gf = ax/16384.0
-	accelerationx = gf * 9.81
-
-def calculate_gy(ay):
-	gf = ay/16384.0
-	accelerationy = gf * 9.81
-
-
+testing = True
 
 
 user_inputs = sys.argv
-
-quadname = user_inputs[1]
-password = user_inputs[2]
-time_delay = float(user_inputs[3])
+if testing == False:
+	quadname = user_inputs[1]
+	password = user_inputs[2]
+	time_delay = float(user_inputs[3])
+	time.sleep(time_delay)
+else:
+	quadname = 'ferrari'
 
 URL = 'https://quadlink-c80dc.firebaseio.com/'+ quadname +'.json'
 s = requests.Session()
@@ -32,7 +27,7 @@ print (URL)
 
 
 
-time.sleep(time_delay)
+
 
 
 payload = {
@@ -55,17 +50,33 @@ payload = {
 temp_line = ''
 for item in range(100):
 	
+	if testing == False:
+		multiplex = open('multiplex.txt', 'r')
+		data_line = multiplex.readline()
+		multiplex.close()
+	else:
+		data_line = ''
+		payload = {
+		'axis': {
+			'pitch': item/2.0,
+			'roll': item/3.0,
+			'yaw': item/4.0,
+		},
+		'acceleration': {
+			'x_acc': item/2.0,
+			'x_acc': item/3.0,
+			'z_acc': item/4.0,
+			},
+		'temp':item/10.0,
+		}
+		send = True
 
-	multiplex = open('multiplex.txt', 'r')
 
-	data_line = multiplex.readline()
+	
 
 
-	multiplex.close()
+	
 	time.sleep(0.04)
-
-	## calculate_g()
-
 	#try not to waste request bandwith by sending same values 
 	if data_line != temp_line:
 		temp_line = data_line
@@ -109,18 +120,18 @@ for item in range(100):
 			send = False
 			print (Ex)
 
+	print payload
 
-		print data_line
+	if send:
+		try:
 
-		if send:
-			try:
-				# ts = time.time()
-				r = s.patch(URL, data=json.dumps(payload), timeout=0.2)
-				# to = time.time() - ts
-				#print ('Time Taken For Req:' + str(to))
-			except Exception as e:
-				print ('request has timed out: '+ str(e) +'\n')
-				pass
+			# ts = time.time()
+			r = s.patch(URL, data=json.dumps(payload), timeout=0.2)
+			# to = time.time() - ts
+			#print ('Time Taken For Req:' + str(to))
+		except Exception as e:
+			print ('request has timed out: '+ str(e) +'\n')
+			pass
 
 
 
