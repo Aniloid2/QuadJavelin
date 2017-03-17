@@ -1,0 +1,19 @@
+test carried out with 1 thread: 5.0295385506
+test carried out with 2 thread: 10.2573741604
+test carried out with 3 thread: 16.2204416984
+test carried out with 4 thread: 22.6935065547
+test carried out with 5 thread: 30.2228479834
+test carried out with 6 thread: 30.6674450763
+test carried out with 7 thread: 40.4466376478
+test carried out with 8 thread: 45.1975780755
+test carried out with 9 thread: 46.2802405809
+test carried out with 10 thread: 55.2862919465
+test carried out with 11 thread: 62.2880467996
+test carried out with 12 thread: 61.1957092745
+test carried out with 13 thread: 75.1742203051
+test carried out with 14 thread: 76.3176371821
+test carried out with 15 thread: 82.7942257943
+test carried out with 16 thread: 92.1284575302
+test carried out with 17 thread: 96.9594337757
+test carried out with 18 thread: 100.539606034
+

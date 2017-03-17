@@ -2,7 +2,13 @@ import sys
 import os
 import re
 
-
+#This section of code is used to duplicated the number of fetchers
+#The user types sudo python Employer (Username Quad) (Password) (Fetchers
+# wanted) (IP of phone camera)
+#those comands create the number of fetchers required and a bash executable
+#the bash executable runs sorter.py and all fetchers simultaneously
+#a delay is passed as an argument to every fetcher. this is to allow every request
+#to be fired with 100ms of each other. pass the -d parameter to delete all fetchers
 
 def delete_workers():
 	cwd = os.getcwd()
@@ -22,11 +28,11 @@ def check_errors(passed_args):
 		print ("~~ All workers deleted")
 
 
-	if (len(passed_args) == 4):
+	if (len(passed_args) == 5):
 		print ('~~ File creation starting')			
 		return True
 	else:
-		print ('~~ Enter 3 arguments, 1 = name of quad, 2 = password, 3 = refresh rate')
+		print ('~~ Enter 4 arguments, 1 = name of quad, 2 = password, 3 = refresh rate 4=Ip address')
 		print ('~~ Delete workers with -d extension')
 		return False
 
@@ -46,7 +52,7 @@ def create_files(FPS, read_quaddump):
 		print ('~~ Done')
 
 
-def create_bash_executable(FPS, Name,password):
+def create_bash_executable(FPS, Name,password,ip):
 	open("turn_on.sh", "w").close()
 	print (open("turn_on.sh", "r").read())
 	bash = open("turn_on.sh", "a")
@@ -57,7 +63,7 @@ def create_bash_executable(FPS, Name,password):
 		else:
 			time_delay = i/10.0
 		print (time_delay)
-		name_executable = ("python fetcher_worker_{}.py {} {} {} & \n".format(i, Name,password, time_delay))
+		name_executable = ("python fetcher_worker_{}.py {} {} {} {} & \n".format(i, Name,password, time_delay, ip))
 		bash.write(name_executable)
 
 	bash.close()
@@ -69,15 +75,16 @@ def main(passed_args):
 		while Bool_door == True:
 			# Here Code Works, read file and duplicate for number of frames
 			read_quaddump = read_master_file()
-			FPS = passed_args[len(passed_args) - 1]
-			Name = passed_args[len(passed_args)-3]
-			password = passed_args[len(passed_args)-2]
+			FPS = passed_args[len(passed_args) - 2]
+			Name = passed_args[len(passed_args)-4]
+			password = passed_args[len(passed_args)-3]
+			ip = str(passed_args[len(passed_args)-1])
 			print ('~~ Hi '+ Name)
 			create_files(FPS, read_quaddump)
 			
 			
 
-			create_bash_executable(FPS, Name,password)
+			create_bash_executable(FPS, Name,password, ip)
 			print ('~~ Thank you for using us!')
 			sys.exit()
 
