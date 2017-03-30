@@ -11,6 +11,9 @@ import sys
 
 
 #initialise serial port 
+
+
+
 serialport = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.5)
 
 
@@ -66,11 +69,11 @@ while True:
 
 				#For Debugging purposes, append to a text file the values from the serial port, 
 				#join them with the time when values happened.
-				log = open('logging.txt', 'a')
-				time = time.strftime("%H:%M:%S", time.gmtime(666))
-				to_write = str(coms_tog) + str(time)
-				log.write(to_write)
-				log.close()
+				# log = open('logging.txt', 'a')
+				# time = time.strftime("%H:%M:%S", time.gmtime(666))
+				# to_write = str(coms_tog) + str(time)
+				# log.write(to_write)
+				# log.close()
 
 
 			while (len(coms)>0):

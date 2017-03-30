@@ -27,10 +27,12 @@ if testing == False:
 	password = user_inputs[2]
 	time_delay = float(user_inputs[3])
 	ipaddress_phone = user_inputs[4]
+	time.sleep(10)
 	time.sleep(time_delay)
+
 else:
 	quadname = 'hector2'
-	ipaddress_phone ='10.9.135.55:8080'
+	ipaddress_phone ='10.9.132.188:8080'
 
 URL = 'https://quadlink-c80dc.firebaseio.com/'+ quadname +'.json'
 
@@ -67,8 +69,8 @@ send = False
 temp_line = ''
 
 ta = time.time()
-# for item in range(200):
-while True:
+for item in range(100):
+# while True:
 	
 
 	#serial can only be operated by one python script at the time.
@@ -99,7 +101,7 @@ while True:
 			},
 		# 'temp':item/10.0,
 		'ip_address' : ipaddress_phone,
-		'thrust':random.randint(1,100),
+		'thrust':random.randint(1000,2000),
 		}
 		send = True
 
@@ -148,7 +150,7 @@ while True:
 		try:
 			# The request
 			ts = time.time()
-			r = s.patch(URL, data=json.dumps(payload), timeout=0.2)
+			r = s.patch(URL, data=json.dumps(payload))
 			to = time.time() - ts
 
 			# For testing purposes, append latency to then calculate average
@@ -168,7 +170,7 @@ while True:
 
 
 tf = time.time() - ta
-print count
+print (count)
 
 #for testing purposes, total time for number of requests
 # refresh_rate = open('refresh_rate.txt', 'a')
